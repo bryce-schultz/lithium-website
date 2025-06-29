@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lithium Programming Language</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <h1>Lithium</h1>
+                <span class="nav-tagline">Lightweight. Expressive. Powerful.</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#overview" class="nav-link">Overview</a></li>
+                <li><a href="#features" class="nav-link">Features</a></li>
+                <li><a href="#examples" class="nav-link">Examples</a></li>
+                <li><a href="#documentation" class="nav-link">Documentation</a></li>
+                <li><a href="#download" class="nav-link">Download</a></li>
+            </ul>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-header">
+                    <h1 class="hero-title">
+                        Lithium Programming Language
+                    </h1>
+                    <p class="hero-subtitle">
+                        A lightweight, interpreted programming language designed for clarity, expressiveness, and ease of embedding.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#download" class="btn btn-primary">Get Started</a>
+                        <a href="documentation.html" class="btn btn-secondary">Documentation</a>
+                    </div>
+                </div>
+                <div class="hero-demo">
+                    <pre><code class="language-lithium"># Hello World in Lithium
+fn greet(name) {
+    return "Hello, " + name + "!";
+}
+
+println(greet("World"));
+
+# Classes and objects
+class Point {
+    let x = 0;
+    let y = 0;
+    
+    fn Point(xIn, yIn) {
+        x = xIn;
+        y = yIn;
+    }
+    
+    fn toString() {
+        return "Point(" + x + ", " + y + ")";
+    }
+}
+
+let p = Point(10, 20);
+println(p.toString());</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Overview Section -->
+        <section id="overview" class="section">
+            <div class="container">
+                <h2 class="section-title">🎯 Overview</h2>
+                <div class="overview-grid">
+                    <div class="overview-card">
+                        <div class="card-icon">🏗️</div>
+                        <h3>C-like Syntax</h3>
+                        <p>Familiar syntax with blocks, expressions, and statements that developers already know and love.</p>
+                    </div>
+                    <div class="overview-card">
+                        <div class="card-icon">🔄</div>
+                        <h3>Dynamic Typing</h3>
+                        <p>Numbers, strings, booleans, arrays, functions, and user-defined classes with flexible type system.</p>
+                    </div>
+                    <div class="overview-card">
+                        <div class="card-icon">⚡</div>
+                        <h3>First-class Functions</h3>
+                        <p>Functions as values with full closure support for functional programming patterns.</p>
+                    </div>
+                    <div class="overview-card">
+                        <div class="card-icon">🎯</div>
+                        <h3>Block Scoping</h3>
+                        <p>Lexical scoping with let and const declarations for predictable variable behavior.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="section section-alt">
+            <div class="container">
+                <h2 class="section-title">🌟 Key Features</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <h3>📦 Array Literals</h3>
+                        <p>Native array support with indexing and manipulation</p>
+                        <pre><code>let numbers = [1, 2, 3, 4, 5];
+let mixed = ["hello", 42, true, null];</code></pre>
+                    </div>
+                    <div class="feature-item">
+                        <h3>🏛️ Class System</h3>
+                        <p>Simple but powerful class-based object orientation</p>
+                        <pre><code>class Rectangle {
+    let width = 0;
+    let height = 0;
+    
+    fn area() {
+        return width * height;
+    }
+}</code></pre>
+                    </div>
+                    <div class="feature-item">
+                        <h3>🔀 Control Flow</h3>
+                        <p>Complete set of control structures and loop types</p>
+                        <pre><code>for (let i = 0; i < 10; i++) {
+    println(i);
+}
+
+foreach (item : array) {
+    println(item);
+}</code></pre>
+                    </div>
+                    <div class="feature-item">
+                        <h3>🌐 Module System</h3>
+                        <p>Explicit import system for built-ins and user modules</p>
+                        <pre><code>import &lt;io&gt;
+import &lt;math&gt;
+
+printf("PI = %.2f\n", PI);</code></pre>
+                    </div>
+                    <div class="feature-item">
+                        <h3>🔍 Interactive REPL</h3>
+                        <p>Real-time code evaluation and testing</p>
+                        <pre><code>$ li
+lithium v1.1 type 'exit' to quit.
+> let x = 10;
+> x + 5
+15</code></pre>
+                    </div>
+                    <div class="feature-item">
+                        <h3>📝 Clear Errors</h3>
+                        <p>Detailed error reporting with source locations</p>
+                        <pre><code>error: main.li:5:7: 'x' is not defined
+│ print(x);
+│       ~
+│       ^</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Examples Section -->
+        <section id="examples" class="section">
+            <div class="container">
+                <h2 class="section-title">💡 Examples</h2>
+                <div class="examples-grid">
+                    <div class="example-card">
+                        <h3>🔄 Closures and Higher-Order Functions</h3>
+                        <pre><code class="language-lithium">fn makeCounter(start) {
+    let count = start;
+    
+    fn increment() {
+        return count++;
+    }
+    
+    return increment;
+}
+
+let counter1 = makeCounter(0);
+let counter2 = makeCounter(10);
+
+println(counter1());  # 0
+println(counter2());  # 10
+println(counter1());  # 1</code></pre>
+                    </div>
+                    <div class="example-card">
+                        <h3>🎯 Object-Oriented Programming</h3>
+                        <pre><code class="language-lithium">class Vehicle {
+    let make = "";
+    let model = "";
+    let year = 0;
+    
+    fn Vehicle(makeIn, modelIn, yearIn) {
+        make = makeIn;
+        model = modelIn;
+        year = yearIn;
+    }
+    
+    fn toString() {
+        return year + " " + make + " " + model;
+    }
+    
+    fn age() {
+        return 2025 - year;
+    }
+}
+
+let car = Vehicle("Toyota", "Camry", 2020);
+println(car.toString());  # "2020 Toyota Camry"
+println("Age: " + car.age() + " years");</code></pre>
+                    </div>
+                    <div class="example-card">
+                        <h3>📊 Data Processing</h3>
+                        <pre><code class="language-lithium">let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+let evens = [];
+let sum = 0;
+
+foreach (num : numbers) {
+    sum += num;
+    if (num % 2 == 0) {
+        evens[len(evens)] = num;
+    }
+}
+
+println("Sum: " + sum);           # Sum: 55
+println("Evens: " + evens);       # Evens: [2, 4, 6, 8, 10]
+println("Average: " + (sum / len(numbers)));</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Documentation Section -->
+        <section id="documentation" class="section section-alt">
+            <div class="container">
+                <h2 class="section-title">📖 Documentation</h2>
+                <div class="documentation-grid">
+                    <div class="doc-card">
+                        <div class="doc-icon">🚀</div>
+                        <h3>Getting Started</h3>
+                        <p>Learn the basics of Lithium syntax and core concepts.</p>
+                        <a href="documentation.html#overview" class="doc-link">Read Guide →</a>
+                    </div>
+                    <div class="doc-card">
+                        <div class="doc-icon">📋</div>
+                        <h3>Language Reference</h3>
+                        <p>Complete specification with syntax, operators, and grammar.</p>
+                        <a href="documentation.html" class="doc-link">View Spec →</a>
+                    </div>
+                    <div class="doc-card">
+                        <div class="doc-icon">🧪</div>
+                        <h3>Built-in Functions</h3>
+                        <p>Comprehensive guide to all built-in functions and modules.</p>
+                        <a href="documentation.html#built-ins" class="doc-link">Explore API →</a>
+                    </div>
+                    <div class="doc-card">
+                        <div class="doc-icon">💡</div>
+                        <h3>Examples & Tutorials</h3>
+                        <p>Practical examples and best practices for Lithium development.</p>
+                        <a href="#examples" class="doc-link">See Examples →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Download Section -->
+        <section id="download" class="section">
+            <div class="container">
+                <h2 class="section-title">⬇️ Download Lithium</h2>
+                <div class="download-content">
+                    <div class="download-info">
+                        <h3>Ready to try Lithium?</h3>
+                        <p>Get started with the Lithium interpreter and start building amazing projects today.</p>
+                        <div class="version-info">
+                            <span class="version-badge">v1.1</span>
+                            <span class="version-text">Latest Release</span>
+                        </div>
+                    </div>
+                    <div class="download-buttons">
+                        <!-- <a href="#" class="download-btn">
+                            <div class="download-platform">🐧 Linux</div>
+                            <div class="download-details">x86_64 • 2.1 MB</div>
+                        </a>
+                        <a href="#" class="download-btn">
+                            <div class="download-platform">🍎 macOS</div>
+                            <div class="download-details">Universal • 2.3 MB</div>
+                        </a>
+                        <a href="#" class="download-btn">
+                            <div class="download-platform">🪟 Windows</div>
+                            <div class="download-details">x86_64 • 2.5 MB</div>
+                        </a> -->
+                        <a href="https://github.com/bryce-schultz/lithium" class="download-btn" target="_blank">
+                            <div class="download-platform">📦 Source</div>
+                            <div class="download-details">GitHub • Build from source</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>Lithium</h3>
+                    <p>Lightweight. Expressive. Powerful.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Documentation</h4>
+                        <ul>
+                            <li><a href="documentation.html">Language Spec</a></li>
+                            <li><a href="#examples">Examples</a></li>
+                            <li><a href="documentation.html#built-ins">API Reference</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Community</h4>
+                        <ul>
+                            <li><a href="https://github.com/bryce-schultz/lithium" target="_blank">GitHub</a></li>
+                            <li><a href="https://github.com/bryce-schultz/lithium/issues" target="_blank">Issues</a></li>
+                            <li><a href="https://github.com/bryce-schultz/lithium/discussions" target="_blank">Discussions</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="#download">Download</a></li>
+                            <li><a href="https://github.com/bryce-schultz/lithium/blob/main/CHANGELOG.md" target="_blank">Changelog</a></li>
+                            <li><a href="https://github.com/bryce-schultz/lithium/blob/main/LICENSE" target="_blank">License</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Lithium Programming Language. Open source and free to use.</p>
+                <div class="footer-disclaimer">
+                    <small>⚠️ Experimental software - not for production use</small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

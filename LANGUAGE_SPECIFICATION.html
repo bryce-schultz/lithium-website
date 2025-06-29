@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lithium Language Specification v1.1</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Additional styles specific to the documentation page */
+        .doc-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 6rem 2rem 2rem;
+            line-height: 1.7;
+        }
+        
+        .doc-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        .doc-title {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #87ceeb 0%, #add8e6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .doc-subtitle {
+            color: #8a9ba8;
+            font-size: 1.1rem;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        
+        .back-link:hover {
+            color: #5dade2;
+        }
+        
+        .back-link::before {
+            content: "← ";
+        }
+        
+        .doc-content h2 {
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 0.5rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .doc-content h3 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #87ceeb;
+        }
+        
+        .doc-content h4 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #add8e6;
+        }
+        
+        .doc-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background-color: #2c3e50;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            border: 1px solid #34495e;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        .doc-content th, .doc-content td {
+            border: 1px solid #34495e;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .doc-content th {
+            background-color: #34495e;
+            color: #87ceeb;
+            font-weight: bold;
+        }
+        
+        .doc-content tr:nth-child(even) {
+            background-color: #2a3745;
+        }
+        
+        .doc-content blockquote {
+            border-left: 4px solid #3498db;
+            background-color: #2c3e50;
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+        
+        .doc-content .warning {
+            background-color: #8b4513;
+            border: 1px solid #cd853f;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        
+        .doc-content .info {
+            background-color: #1e3a5f;
+            border: 1px solid #3498db;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        
+        .doc-content pre {
+            background: linear-gradient(135deg, #263847 0%, #2a3a4a 50%, #263847 100%);
+            border: 1px solid #34495e;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            overflow-x: auto;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3), 0 1px 3px rgba(86, 156, 214, 0.1);
+            position: relative;
+            margin: 1rem 0;
+        }
+        
+        .doc-content pre::before {
+            content: "lithium";
+            position: absolute;
+            top: 0.5rem;
+            right: 1rem;
+            background-color: #34495e;
+            color: #87ceeb;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .doc-content code {
+            background-color: #2c3e50;
+            color: #e8f4fd;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: 'JetBrains Mono', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        }
+        
+        .doc-content pre code {
+            background: none;
+            padding: 0;
+            color: #d4d4d4;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            text-shadow: 
+                0 0 8px rgba(86, 156, 214, 0.15),
+                0 0 12px rgba(206, 145, 120, 0.1),
+                0 0 6px rgba(106, 153, 85, 0.1);
+            filter: contrast(1.05) brightness(1.02);
+        }
+        
+        .toc {
+            background: rgba(44, 62, 80, 0.6);
+            border: 1px solid #34495e;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .toc h3 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            color: #87ceeb;
+        }
+        
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .toc a {
+            color: #8a9ba8;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .toc a:hover {
+            color: #87ceeb;
+        }
+        
+        .security-disclaimer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #5a2c2c;
+            border: 2px solid #b85555;
+            border-radius: 0.5rem;
+            margin: 2rem 0;
+            color: #ff9999;
+            box-shadow: 0 2px 8px rgba(90,44,44,0.4);
+        }
+        
+        .footer-info {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #2c3e50;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            margin-top: 3rem;
+        }
+        
+        details {
+            background: rgba(44, 62, 80, 0.6);
+            border: 1px solid #34495e;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        summary {
+            color: #87ceeb;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            transition: background-color 0.3s ease;
+        }
+        
+        summary:hover {
+            background-color: rgba(135, 206, 235, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="index.html" class="back-link">Back to Home</a>
+        
+        <div class="doc-header">
+            <h1 class="doc-title">📋 Lithium Language Specification</h1>
+            <p class="doc-subtitle">Version 1.1 - Complete Reference</p>
+        </div>
+
+        <div class="toc">
+            <h3>📑 Table of Contents</h3>
+            <ul>
+                <li><a href="#overview">🎯 Overview</a></li>
+                <li><a href="#lexical-structure">🔤 Lexical Structure</a></li>
+                <li><a href="#operators">🔧 Operators and Expressions</a></li>
+                <li><a href="#data-types">📊 Data Types</a></li>
+                <li><a href="#variables">🗂️ Variables and Scoping</a></li>
+                <li><a href="#functions">🔧 Functions</a></li>
+                <li><a href="#classes">🏛️ Classes and Objects</a></li>
+                <li><a href="#arrays">📋 Arrays</a></li>
+                <li><a href="#control-flow">🔄 Control Flow</a></li>
+                <li><a href="#modules">🌐 Module System</a></li>
+                <li><a href="#built-ins">🧪 Built-in Functions</a></li>
+                <li><a href="#assertions">✅ Assertions</a></li>
+                <li><a href="#type-system">🎯 Type System Details</a></li>
+                <li><a href="#grammar">📝 Grammar Reference</a></li>
+                <li><a href="#error-handling">🚨 Error Handling</a></li>
+                <li><a href="#repl">🎮 Interactive REPL</a></li>
+                <li><a href="#best-practices">🔧 Best Practices</a></li>
+            </ul>
+        </div>
+
+        <div class="doc-content">
+            <hr>
+
+            <h2 id="overview">🎯 Overview</h2>
+
+            <p><strong>Lithium</strong> is a lightweight, interpreted programming language designed for clarity, expressiveness, and ease of embedding. It features a C-like syntax with modern programming constructs, dynamic typing, first-class functions, closures, classes, and a comprehensive built-in library.</p>
+
+            <h3>🌟 Key Features</h3>
+
+            <ul>
+                <li><strong>🏗️ C-like Syntax</strong>: Familiar syntax with blocks, expressions, and statements</li>
+                <li><strong>🔄 Dynamic Typing</strong>: Numbers, strings, booleans, arrays, functions, and user-defined classes</li>
+                <li><strong>⚡ First-class Functions</strong>: Functions as values with full closure support</li>
+                <li><strong>🎯 Block Scoping</strong>: Lexical scoping with <code>let</code> and <code>const</code> declarations</li>
+                <li><strong>📦 Array Literals</strong>: Native array support with indexing and manipulation</li>
+                <li><strong>🏛️ Class System</strong>: Simple but powerful class-based object orientation</li>
+                <li><strong>🔀 Control Flow</strong>: Complete set of control structures (<code>if</code>, <code>while</code>, <code>for</code>, <code>foreach</code>, etc.)</li>
+                <li><strong>🌐 Module System</strong>: Explicit import system for built-ins and user modules</li>
+                <li><strong>🔍 Interactive REPL</strong>: Real-time code evaluation and testing</li>
+                <li><strong>📝 Clear Error Messages</strong>: Detailed error reporting with source locations</li>
+            </ul>
+
+            <hr>
+
+            <h2 id="lexical-structure">🔤 Lexical Structure</h2>
+
+            <h3>Comments</h3>
+            <p>Only line comments are supported using the <code>#</code> character:</p>
+
+            <pre><code># This is a comment
+let x = 10;  # This is also a comment</code></pre>
+
+            <h3>Identifiers</h3>
+            <p>Identifiers follow the pattern: <code>[A-Za-z_][A-Za-z0-9_]*</code></p>
+
+            <pre><code>let variable_name = 10;
+let _private = "hidden";
+let MyClass = "class name";</code></pre>
+
+            <h3>Literals</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Syntax</th>
+                        <th>Examples</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Number</strong></td>
+                        <td><code>[0-9]+\.?[0-9]*</code></td>
+                        <td><code>42</code>, <code>3.14</code>, <code>0</code>, <code>123.456</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>String</strong></td>
+                        <td><code>"..."</code></td>
+                        <td><code>"hello"</code>, <code>"Hello, World!"</code>, <code>""</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Boolean</strong></td>
+                        <td><code>true</code> | <code>false</code></td>
+                        <td><code>true</code>, <code>false</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Null</strong></td>
+                        <td><code>null</code></td>
+                        <td><code>null</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Array</strong></td>
+                        <td><code>[expr, ...]</code></td>
+                        <td><code>[1, 2, 3]</code>, <code>["a", "b"]</code>, <code>[]</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>String Escape Sequences</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sequence</th>
+                        <th>Meaning</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>\"</code></td>
+                        <td>Double quote</td>
+                    </tr>
+                    <tr>
+                        <td><code>\\</code></td>
+                        <td>Backslash</td>
+                    </tr>
+                    <tr>
+                        <td><code>\n</code></td>
+                        <td>Newline</td>
+                    </tr>
+                    <tr>
+                        <td><code>\t</code></td>
+                        <td>Tab</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <pre><code>println("He said, \"Hello!\"");
+println("C:\\Program Files\\");
+println("Line1\nLine2");
+println("Tab\tSeparated");</code></pre>
+
+            <hr>
+
+            <h2 id="operators">🔧 Operators and Expressions</h2>
+
+            <h3>Operator Precedence (Highest to Lowest)</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Level</th>
+                        <th>Operators</th>
+                        <th>Associativity</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><code>()</code> <code>[]</code> <code>.</code></td>
+                        <td>Left-to-right</td>
+                        <td>Function calls, array access, member access</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><code>++</code> <code>--</code> (postfix)</td>
+                        <td>Left-to-right</td>
+                        <td>Postfix increment/decrement</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><code>++</code> <code>--</code> (prefix) <code>+</code> <code>-</code> <code>!</code></td>
+                        <td>Right-to-left</td>
+                        <td>Prefix increment/decrement, unary plus/minus, logical NOT</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><code>*</code> <code>/</code> <code>%</code></td>
+                        <td>Left-to-right</td>
+                        <td>Multiplication, division, modulo</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td><code>+</code> <code>-</code></td>
+                        <td>Left-to-right</td>
+                        <td>Addition, subtraction</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td><code>&lt;</code> <code>&lt;=</code> <code>&gt;</code> <code>&gt;=</code></td>
+                        <td>Left-to-right</td>
+                        <td>Relational comparison</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td><code>==</code> <code>!=</code></td>
+                        <td>Left-to-right</td>
+                        <td>Equality comparison</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td><code>&amp;&amp;</code></td>
+                        <td>Left-to-right</td>
+                        <td>Logical AND</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td><code>||</code></td>
+                        <td>Left-to-right</td>
+                        <td>Logical OR</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td><code>=</code> <code>+=</code> <code>-=</code> <code>*=</code> <code>/=</code> <code>%=</code></td>
+                        <td>Right-to-left</td>
+                        <td>Assignment operators</td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td><code>,</code></td>
+                        <td>Left-to-right</td>
+                        <td>Comma operator</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Arithmetic Operators</h3>
+
+            <pre><code>let a = 10 + 5;     # Addition: 15
+let b = 10 - 5;     # Subtraction: 5
+let c = 10 * 5;     # Multiplication: 50
+let d = 10 / 5;     # Division: 2
+let e = 10 % 3;     # Modulo: 1</code></pre>
+
+            <h3>Assignment Operators</h3>
+
+            <pre><code>let x = 10;
+x += 5;    # x = x + 5  -> 15
+x -= 3;    # x = x - 3  -> 12
+x *= 2;    # x = x * 2  -> 24
+x /= 4;    # x = x / 4  -> 6
+x %= 5;    # x = x % 5  -> 1</code></pre>
+
+            <h3>Comparison Operators</h3>
+
+            <pre><code>println(5 == 5);    # true
+println(5 != 3);    # true
+println(5 > 3);     # true
+println(5 >= 5);    # true
+println(3 < 5);     # true
+println(3 <= 3);    # true</code></pre>
+
+            <h3>Logical Operators</h3>
+
+            <pre><code>println(true && false);   # false (logical AND)
+println(true || false);   # true (logical OR)
+println(!true);           # false (logical NOT)</code></pre>
+
+            <div class="info">
+                <strong>📘 Short-Circuit Evaluation:</strong> Logical operators use short-circuit evaluation. In <code>a && b</code>, if <code>a</code> is false, <code>b</code> is not evaluated. In <code>a || b</code>, if <code>a</code> is true, <code>b</code> is not evaluated.
+            </div>
+
+            <h3>Increment/Decrement Operators</h3>
+
+            <pre><code>let x = 5;
+println(x++);  # 5 (postfix: returns old value, then increments)
+println(++x);  # 7 (prefix: increments first, then returns new value)
+println(x--);  # 7 (postfix: returns old value, then decrements)
+println(--x);  # 5 (prefix: decrements first, then returns new value)</code></pre>
+
+            <hr>
+
+            <h2 id="data-types">📊 Data Types</h2>
+
+            <h3>Primitive Types</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Examples</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Number</strong></td>
+                        <td>64-bit floating point</td>
+                        <td><code>42</code>, <code>3.14</code>, <code>-10</code>, <code>0</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>String</strong></td>
+                        <td>UTF-8 encoded text</td>
+                        <td><code>"hello"</code>, <code>"world"</code>, <code>""</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Boolean</strong></td>
+                        <td>Logical values</td>
+                        <td><code>true</code>, <code>false</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Null</strong></td>
+                        <td>Absence of value</td>
+                        <td><code>null</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Composite Types</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Examples</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Array</strong></td>
+                        <td>Ordered collection of values</td>
+                        <td><code>[1, 2, 3]</code>, <code>["a", "b"]</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Function</strong></td>
+                        <td>Callable code blocks</td>
+                        <td><code>fn add(a, b) { return a + b; }</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Class</strong></td>
+                        <td>User-defined types</td>
+                        <td><code>class Point { let x = 0; }</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Object</strong></td>
+                        <td>Instances of classes</td>
+                        <td><code>let p = Point();</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Type Conversion</h3>
+
+            <p>Lithium performs automatic type conversion in certain contexts:</p>
+
+            <pre><code># String concatenation
+println("Number: " + 42);        # "Number: 42"
+println("Value: " + true);       # "Value: true"
+
+# Boolean context (truthiness)
+if (0) { }          # false
+if (1) { }          # true
+if ("") { }         # false
+if ("hello") { }    # true
+if (null) { }       # false
+if ([]) { }         # false (empty array is falsy)</code></pre>
+
+            <hr>
+
+            <h2 id="variables">🗂️ Variables and Scoping</h2>
+
+            <h3>Variable Declarations</h3>
+
+            <pre><code># Mutable variables (must be initialized)
+let name = "John";
+let age = 30;
+
+# Constants (must be initialized)
+const PI = 3.14159;
+const VERSION = "1.0";</code></pre>
+
+            <div class="warning">
+                <strong>⚠️ Initialization Required:</strong> All variable declarations must include an initial value. Declarations like <code>let x;</code> will result in a syntax error expecting an <code>=</code> sign. This ensures no uninitialized variables exist in Lithium code.
+            </div>
+
+            <pre><code># ✅ Valid declarations
+let x = 10;
+let name = "hello";
+let flag = true;
+const MAX = 100;
+
+# ❌ Invalid - syntax error
+let y;              # Error: expected '='
+const LIMIT;        # Error: expected '='</code></pre>
+
+            <div class="warning">
+                <strong>⚠️ Constants:</strong> Once declared, constants cannot be reassigned. Attempting to modify a constant will result in a runtime error.
+            </div>
+
+            <h3>Scoping Rules</h3>
+
+            <p>Lithium uses <strong>lexical (block) scoping</strong>:</p>
+
+            <pre><code>let global = "I'm global";
+
+if (true) {
+    let block = "I'm in a block";
+    println(global);  # Accessible: "I'm global"
+    println(block);   # Accessible: "I'm in a block"
+}
+
+# println(block);  # Error: 'block' is not defined</code></pre>
+
+            <h3>Variable Shadowing</h3>
+
+            <pre><code>let x = "outer";
+{
+    let x = "inner";
+    println(x);       # "inner"
+}
+println(x);           # "outer"</code></pre>
+
+            <hr>
+
+            <h2 id="functions">🔧 Functions</h2>
+
+            <h3>Function Declaration</h3>
+
+            <pre><code>fn functionName(param1, param2) {
+    # function body
+    return result;
+}
+
+# Functions without parameters
+fn greet() {
+    println("Hello, World!");
+}
+
+# Functions without explicit return
+fn doSomething() {
+    println("This function has no return value");
+    # Cannot assign result: let x = doSomething(); would be a syntax error
+}</code></pre>
+
+            <h3>Function Calls</h3>
+
+            <pre><code>let result = functionName(arg1, arg2);
+greet();
+doSomething();</code></pre>
+
+            <h3>Closures</h3>
+
+            <p>Functions can capture variables from their enclosing scope:</p>
+
+            <pre><code>fn makeCounter(start) {
+    let count = start;
+    
+    fn increment() {
+        return count++;
+    }
+    
+    return increment;
+}
+
+let counter1 = makeCounter(0);
+let counter2 = makeCounter(10);
+
+println(counter1());  # 0
+println(counter2());  # 10
+println(counter1());  # 1
+println(counter2());  # 11</code></pre>
+
+            <h3>Function Hoisting</h3>
+
+            <p>Functions are hoisted within their block scope:</p>
+
+            <pre><code>println(hoisted());  # Works! Prints "I'm hoisted"
+
+fn hoisted() {
+    return "I'm hoisted";
+}</code></pre>
+
+            <div class="info">
+                <strong>📘 First-Class Functions:</strong> Functions are values in Lithium. They can be assigned to variables, passed as arguments, and returned from other functions.
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Return Statement Usage:</strong> The <code>return</code> statement can only be used inside functions. Using <code>return</code> outside of a function will result in a compile-time error.
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Function Return Values:</strong> Functions without an explicit <code>return</code> statement do not return any value. Attempting to assign the result of such functions to variables will result in a syntax error, as Lithium does not allow undefined values.
+            </div>
+
+            <pre><code>fn withReturn() {
+    return 42;
+}
+
+fn withoutReturn() {
+    println("No return value");
+}
+
+# ✅ Valid - function has explicit return
+let result = withReturn();  # result = 42
+
+# ❌ Invalid - function has no return value
+let invalid = withoutReturn();  # Syntax error: cannot assign undefined value
+
+# ✅ Valid - call function without assignment
+withoutReturn();  # Just calls the function</code></pre>
+
+            <hr>
+
+            <h2 id="classes">🏛️ Classes and Objects</h2>
+
+            <h3>Class Declaration</h3>
+
+            <pre><code>class ClassName {
+    # Class members (variables and methods)
+    let memberVariable = defaultValue;
+    
+    # Constructor (must match class name)
+    fn ClassName(param1, param2) {
+        memberVariable = param1;
+        # Initialize other members
+    }
+    
+    # Methods
+    fn methodName() {
+        return memberVariable;
+    }
+}</code></pre>
+
+            <h3>Class Example</h3>
+
+            <pre><code>class Point {
+    let x = 0;
+    let y = 0;
+    
+    fn Point(xIn, yIn) {
+        x = xIn;
+        y = yIn;
+    }
+    
+    fn move(dx, dy) {
+        x += dx;
+        y += dy;
+    }
+    
+    fn toString() {
+        return "Point(" + x + ", " + y + ")";
+    }
+    
+    fn getX() {
+        return x;
+    }
+    
+    fn getY() {
+        return y;
+    }
+}</code></pre>
+
+            <h3>Object Instantiation</h3>
+
+            <pre><code># Create instances
+let p1 = Point(10, 20);
+let p2 = Point(0, 0);
+
+# Access members
+println(p1.x);         # 10
+println(p1.getX());    # 10
+
+# Call methods
+p1.move(5, -3);
+println(p1.toString()); # "Point(15, 17)"</code></pre>
+
+            <h3>Class Scope Rules</h3>
+
+            <div class="warning">
+                <strong>⚠️ Global Scope Only:</strong> Classes can only be declared in global scope, not inside functions or blocks.
+            </div>
+
+            <pre><code># ✅ Valid - global scope
+class MyClass { }
+
+fn someFunction() {
+    # ❌ Invalid - classes cannot be declared in functions
+    class LocalClass { }
+}
+
+if (condition) {
+    # ❌ Invalid - classes cannot be declared in blocks
+    class BlockClass { }
+}</code></pre>
+
+            <h3>Member Access</h3>
+
+            <div class="info">
+                <strong>📘 No "this" Keyword:</strong> Lithium does not use a <code>this</code> keyword. Class members are accessed directly by name within methods.
+            </div>
+
+            <hr>
+
+            <h2 id="arrays">📋 Arrays</h2>
+
+            <h3>Array Creation</h3>
+
+            <pre><code>let empty = [];
+let numbers = [1, 2, 3, 4, 5];
+let mixed = ["hello", 42, true, null];
+let nested = [[1, 2], [3, 4]];</code></pre>
+
+            <h3>Array Access</h3>
+
+            <pre><code>let arr = [10, 20, 30];
+println(arr[0]);  # 10
+println(arr[1]);  # 20
+println(arr[2]);  # 30
+
+# Modify elements
+arr[0] = 100;
+println(arr[0]);  # 100</code></pre>
+
+            <h3>String Indexing</h3>
+
+            <p>Strings support array-like indexing:</p>
+
+            <pre><code>let str = "hello";
+println(str[0]);  # "h"
+println(str[1]);  # "e"
+println(str[4]);  # "o"</code></pre>
+
+            <h3>String Properties</h3>
+
+            <pre><code>println("hello".length);     # 5
+println("".length);          # 0
+
+let text = "Hello, World!";
+println(text.length);        # 13</code></pre>
+
+            <hr>
+
+            <h2 id="control-flow">🔄 Control Flow</h2>
+
+            <h3>Conditional Statements</h3>
+
+            <pre><code># if statement
+if (condition) {
+    # code block
+}
+
+# if-else statement
+if (condition) {
+    # code if true
+} else {
+    # code if false
+}
+
+# Nested conditions
+if (x > 0) {
+    println("positive");
+} else if (x < 0) {
+    println("negative");
+} else {
+    println("zero");
+}</code></pre>
+
+            <h3>While Loops</h3>
+
+            <pre><code>let i = 0;
+while (i < 5) {
+    println(i);
+    i++;
+}</code></pre>
+
+            <h3>For Loops</h3>
+
+            <pre><code>for (let i = 0; i < 10; i++) {
+    println(i);
+}
+
+# For loop parts: initialization; condition; increment
+for (let i = 10; i > 0; i--) {
+    println("Countdown: " + i);
+}</code></pre>
+
+            <h3>Foreach Loops</h3>
+
+            <pre><code># Array iteration - single value variant
+let numbers = [1, 2, 3, 4, 5];
+foreach (num : numbers) {
+    println(num);
+}
+
+# Object iteration - key-value variant  
+class Person {
+    let name = "John";
+    let age = 30;
+}
+let p = Person();
+foreach (key, value : p) {
+    println(key + ": " + value);
+}
+
+# Works with mixed arrays
+let mixed = ["hello", 42, true, null];
+foreach (item : mixed) {
+    println("Item: " + item);
+}</code></pre>
+
+            <div class="warning">
+                <strong>⚠️ Foreach Variants:</strong>
+                <ul>
+                    <li><strong>Array iteration:</strong> <code>foreach (value : array)</code> - single value before the colon</li>
+                    <li><strong>Object iteration:</strong> <code>foreach (key, value : object)</code> - key and value before the colon</li>
+                    <li>Using the wrong variant for the data type will result in a runtime error</li>
+                </ul>
+            </div>
+
+            <h3>Break and Continue</h3>
+
+            <pre><code>for (let i = 0; i < 10; i++) {
+    if (i == 3) {
+        continue;  # Skip iteration when i is 3
+    }
+    if (i == 7) {
+        break;     # Exit loop when i is 7
+    }
+    println(i);
+}
+# Output: 0, 1, 2, 4, 5, 6</code></pre>
+
+            <div class="warning">
+                <strong>⚠️ Loop Control Statements:</strong>
+                <ul>
+                    <li><code>break</code> and <code>continue</code> can only be used inside loops (<code>for</code>, <code>while</code>, <code>foreach</code>)</li>
+                    <li>Using these statements outside of loops will result in a compile-time error</li>
+                </ul>
+            </div>
+
+            <hr>
+
+            <h2 id="modules">🌐 Module System</h2>
+
+            <h3>Built-in Modules</h3>
+
+            <p>Lithium provides several built-in modules that must be explicitly imported:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Module</th>
+                        <th>Description</th>
+                        <th>Provides</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>&lt;io&gt;</code></td>
+                        <td>Input/Output operations</td>
+                        <td><code>printf()</code>, <code>input()</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>&lt;math&gt;</code></td>
+                        <td>Mathematical constants</td>
+                        <td><code>PI</code>, <code>E</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>&lt;args&gt;</code></td>
+                        <td>Command line arguments</td>
+                        <td><code>args</code> (array of arguments)</td>
+                    </tr>
+                    <tr>
+                        <td><code>&lt;random&gt;</code></td>
+                        <td>Random number generation</td>
+                        <td><code>random()</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>&lt;os&gt;</code></td>
+                        <td>Operating system functions</td>
+                        <td><code>open()</code>, <code>close()</code>, <code>read()</code>, <code>write()</code>, <code>shell()</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>&lt;socket&gt;</code></td>
+                        <td>Network socket operations</td>
+                        <td><code>socket()</code>, <code>listen()</code>, <code>accept()</code>, <code>connect()</code>, <code>send()</code>, <code>receive()</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>&lt;time&gt;</code></td>
+                        <td>Time and sleep functions</td>
+                        <td><code>time()</code>, <code>sleep()</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Import Syntax</h3>
+
+            <pre><code># Import modules
+import &lt;io&gt;
+import &lt;math&gt;
+
+# Import modules using path notation (. becomes /)
+import &lt;io.getfile&gt;  # Imports from modules/io/getfile.li
+import &lt;utils.string.helpers&gt;  # Imports from modules/utils/string/helpers.li</code></pre>
+
+            <h3>Always Available</h3>
+
+            <p>Some constants and functions are always available without imports:</p>
+
+            <pre><code># Built-in constants
+println(VERSION);    # Lithium version ("1.1")
+println(FILE);       # Current file name (string)
+println(LINE);       # Current line number (number)
+println(true);       # Boolean true
+println(false);      # Boolean false
+println(null);       # Null value
+
+# Built-in functions (no import required)
+print("Hello");      # Print values without newline
+println("World");    # Print values with newline
+type(42);            # Get type of value → "number"
+exit(0);             # Exit program with code
+len([1, 2, 3]);      # Get length of array → 3
+number("42");        # Convert to number → 42
+dumpenv();           # Dump environment variables (debugging)</code></pre>
+
+            <hr>
+
+            <h2 id="built-ins">🧪 Built-in Functions</h2>
+
+            <h3>Core Functions</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Function</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>print(...)</code></td>
+                        <td>Print values without newline</td>
+                        <td><code>print("Hello", " ", "World")</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>println(...)</code></td>
+                        <td>Print values with newline</td>
+                        <td><code>println("Hello World")</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>type(value)</code></td>
+                        <td>Get type of value</td>
+                        <td><code>type(42)</code> → <code>"number"</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>exit(code)</code></td>
+                        <td>Exit program with code</td>
+                        <td><code>exit(0)</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>len(array)</code></td>
+                        <td>Get length of array</td>
+                        <td><code>len([1, 2, 3])</code> → <code>3</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>number(value)</code></td>
+                        <td>Convert value to number</td>
+                        <td><code>number("42")</code> → <code>42</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Type Function</h3>
+
+            <p>The <code>type()</code> function returns the type of any value:</p>
+
+            <pre><code>println(type("hello"));     # "string"
+println(type(42));          # "number"
+println(type(true));        # "boolean"
+println(type(null));        # "null"
+println(type([1, 2, 3]));   # "array"
+println(type(type));        # "builtin"
+
+# For object instances, returns class name
+class Person { }
+let p = Person();
+println(type(p));           # "Person"</code></pre>
+
+            <hr>
+
+            <h2 id="assertions">✅ Assertions</h2>
+
+            <h3>Basic Assertions</h3>
+
+            <pre><code>assert expression;
+assert expression, "Custom error message";</code></pre>
+
+            <h3>Assertion Examples</h3>
+
+            <pre><code># Basic assertions
+assert true;
+assert 1 + 1 == 2;
+assert "hello" == "hello";
+
+# Assertions with custom messages
+assert x > 0, "x must be positive";
+assert len(array) > 0, "Array cannot be empty";
+
+# Assertions that will fail
+assert false;                    # AssertionError
+assert 1 == 2, "Math is broken"; # AssertionError: Math is broken</code></pre>
+
+            <div class="info">
+                <strong>📘 Assert Behavior:</strong> If an assertion fails, the program terminates with an error message showing the assertion that failed and the optional custom message.
+            </div>
+
+            <hr>
+
+            <h2 id="type-system">🎯 Type System Details</h2>
+
+            <h3>Truthiness</h3>
+
+            <p>Values are considered truthy or falsy in boolean contexts:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Value</th>
+                        <th>Truthiness</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>null</code></td>
+                        <td><code>false</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>0</code></td>
+                        <td><code>false</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>""</code> (empty string)</td>
+                        <td><code>false</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>[]</code> (empty array)</td>
+                        <td><code>false</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>{}</code> (empty object)</td>
+                        <td><code>false</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>false</code></td>
+                        <td><code>false</code></td>
+                    </tr>
+                    <tr>
+                        <td>Everything else</td>
+                        <td><code>true</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr>
+
+            <h2 id="grammar">📝 Grammar Reference</h2>
+
+            <details>
+                <summary><strong>🔍 Complete BNF Grammar (Click to expand)</strong></summary>
+
+                <pre><code>module         → stmts
+
+stmts          → stmt stmts | ε
+
+stmt           → block | forStmt | whileStmt | ifStmt | funcDecl 
+               | classDecl | returnStmt | breakStmt | continueStmt
+               | assertStmt | exprStmt | importStmt
+
+forStmt        → FOR ( exprStmt exprStmt expr ) stmt
+foreachStmt    → FOREACH ( IDENT : expr ) stmt
+               | FOREACH ( IDENT , IDENT : expr ) stmt
+whileStmt      → WHILE ( expr ) stmt
+ifStmt         → IF ( expr ) stmt | IF ( expr ) stmt ELSE stmt
+block          → { stmts } | { }
+
+funcDecl       → FN IDENT ( paramList ) stmt | FN IDENT ( ) stmt
+paramList      → IDENT paramList' | ε
+paramList'     → , IDENT paramList' | ε
+
+classDecl      → CLASS IDENT { classBody }
+classBody      → varDecl | funcDecl
+
+returnStmt     → RETURN expr ; | RETURN ;
+breakStmt      → BREAK ;
+continueStmt   → CONTINUE ;
+assertStmt     → ASSERT expr ; | ASSERT expr , expr ;
+
+exprStmt       → expr ; | varDecl | ;
+importStmt     → IMPORT < moduleName > ;
+moduleName     → IDENT . IDENT | IDENT
+
+varDecl        → letStmt | constStmt
+letStmt        → LET IDENT = expr ;
+constStmt      → CONST IDENT = expr ;
+
+expr           → assign expr'
+expr'          → , assign expr' | ε
+
+assign         → or assign'
+assign'        → = or assign' | PLUS_EQUAL or assign'
+               | MINUS_EQUAL or assign' | MUL_EQUAL or assign'
+               | DIV_EQUAL or assign' | MOD_EQUAL or assign' | ε
+
+or             → and or'
+or'            → OR and or' | ε
+
+and            → equality and'
+and'           → AND equality and' | ε
+
+equality       → relation equality'
+equality'      → EQ relation equality' | NE relation equality' | ε
+
+relation       → addit relation'
+relation'      → > addit relation' | < addit relation'
+               | GE addit relation' | LE addit relation' | ε
+
+addit          → mult addit'
+addit'         → + mult addit' | - mult addit' | ε
+
+mult           → unary mult'
+mult'          → * unary mult' | / unary mult' | % unary mult' | ε
+
+unary          → INC unary | DEC unary | + unary | - unary | ! unary | post
+
+post           → primary post''
+post'          → [ expr ] | ( argList ) | . IDENT | INC | DEC
+post''         → post' post'' | ε
+
+primary        → ( expr ) | [ argList ] | IDENT | NUMBER | STRING
+
+argList        → assign argList'
+argList'       → , assign argList' | ε</code></pre>
+            </details>
+
+            <hr>
+
+            <h2 id="error-handling">🚨 Error Handling</h2>
+
+            <h3>Common Error Types</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Error Type</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Syntax Error</strong></td>
+                        <td>Invalid syntax</td>
+                        <td>Missing semicolon, unmatched brackets</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Reference Error</strong></td>
+                        <td>Undefined variable</td>
+                        <td>Using undeclared variable</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Type Error</strong></td>
+                        <td>Invalid operation for type</td>
+                        <td>Calling non-function, array access on non-array</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Assignment Error</strong></td>
+                        <td>Invalid assignment</td>
+                        <td>Assigning to constant, non-lvalue</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Assertion Error</strong></td>
+                        <td>Failed assertion</td>
+                        <td><code>assert false</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Error Message Format</h3>
+
+            <pre><code>error: filename:line:column: error message
+│ source code line
+│ ~~~~~~
+│ ^</code></pre>
+
+            <p>Example:</p>
+
+            <pre><code>error: main.li:5:7: 'x' is not defined
+│ print(x);
+│       ~
+│       ^</code></pre>
+
+            <hr>
+
+            <h2 id="repl">🎮 Interactive REPL</h2>
+
+            <h3>Starting the REPL</h3>
+
+            <pre><code>$ li
+lithium v1.1 type 'exit' to quit.
+></code></pre>
+
+            <h3>REPL Features</h3>
+
+            <ul>
+                <li><strong>Immediate Evaluation</strong>: Enter expressions and see results instantly</li>
+                <li><strong>Multi-line Support</strong>: Enter complex statements across multiple lines</li>
+                <li><strong>Variable Persistence</strong>: Variables remain in scope across REPL sessions</li>
+                <li><strong>Error Recovery</strong>: Syntax errors don't crash the REPL</li>
+            </ul>
+
+            <h3>REPL Examples</h3>
+
+            <pre><code>> let x = 10;
+> x + 5
+15
+> fn double(n) { return n * 2; }
+> double(x)
+20
+> class Point { let x = 0; let y = 0; }
+> let p = Point();
+> p.x = 42;
+> p.x
+42
+> exit</code></pre>
+
+            <hr>
+
+            <h2 id="best-practices">🔧 Best Practices</h2>
+
+            <h3>Code Style</h3>
+
+            <pre><code># ✅ Good: Clear function names
+fn calculateArea(width, height) {
+    return width * height;
+}
+
+# ✅ Good: Meaningful variable names
+let userAge = 25;
+let isLoggedIn = true;
+
+# ✅ Good: Consistent indentation
+if (condition) {
+    doSomething();
+    doSomethingElse();
+}
+
+# ✅ Good: Comments for complex logic
+fn fibonacci(n) {
+    # Handle base cases
+    if (n <= 1) {
+        return n;
+    }
+    
+    # Recursive case
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}</code></pre>
+
+            <h3>Error Handling</h3>
+
+            <pre><code># ✅ Good: Validate inputs
+fn divide(a, b) {
+    assert b != 0, "Division by zero";
+    return a / b;
+}
+
+# ✅ Good: Check array bounds
+fn getElement(array, index) {
+    assert index >= 0 && index < array.length, "Index out of bounds";
+    return array[index];
+}</code></pre>
+
+            <h3>Class Design</h3>
+
+            <pre><code># ✅ Good: Clear constructor parameters
+class Rectangle {
+    let width = 0;
+    let height = 0;
+    
+    fn Rectangle(w, h) {
+        assert w > 0 && h > 0, "Dimensions must be positive";
+        width = w;
+        height = h;
+    }
+    
+    fn area() {
+        return width * height;
+    }
+    
+    fn toString() {
+        return "Rectangle(" + width + "x" + height + ")";
+    }
+}</code></pre>
+
+            <hr>
+
+            <h2>🏁 Conclusion</h2>
+
+            <p>Lithium provides a clean, intuitive programming environment suitable for:</p>
+
+            <ul>
+                <li><strong>🎓 Learning Programming</strong>: Simple syntax with modern features</li>
+                <li><strong>🚀 Rapid Prototyping</strong>: Quick script development and testing</li>
+                <li><strong>🔧 Embedded Scripting</strong>: Easy integration into larger applications</li>
+                <li><strong>📊 Data Processing</strong>: Built-in array support and string manipulation</li>
+                <li><strong>🎯 Educational Projects</strong>: Clear error messages and interactive REPL</li>
+            </ul>
+
+            <p>The language balances simplicity with power, offering familiar C-like syntax while providing modern programming constructs like closures, classes, and a comprehensive module system.</p>
+
+            <hr>
+
+            <div class="security-disclaimer">
+                <strong>🐛 Security Disclaimer</strong><br>
+                <em>Lithium is experimental software and has not undergone thorough security testing. Do not use Lithium for security-critical applications or in production environments where security vulnerabilities could pose risks. There may be undiscovered bugs and security issues.</em>
+            </div>
+
+            <div class="footer-info">
+                <strong>📋 Lithium Language Specification v1.1</strong><br>
+                <em>For the latest updates and examples, visit the project repository</em>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
