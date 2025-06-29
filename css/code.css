@@ -121,3 +121,31 @@ pre code {
     text-rendering: optimizeLegibility;
     overflow-wrap: break-word;
 }
+
+/* Mobile code block overflow prevention */
+@media (max-width: 800px) {
+    pre {
+        overflow-x: auto !important;
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+    
+    pre code {
+        white-space: pre-wrap !important;
+        word-break: break-word !important;
+        overflow-wrap: break-word !important;
+        max-width: 100% !important;
+    }
+    
+    .hero-demo pre {
+        max-width: 100% !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    
+    .hero-demo pre code {
+        white-space: pre-wrap !important;
+        word-break: break-word !important;
+    }
+}

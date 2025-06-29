@@ -3,6 +3,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* Prevent horizontal overflow */
+    max-width: 100%;
+}
+
+*:before,
+*:after {
+    box-sizing: border-box;
+    max-width: 100%;
 }
 
 html {
@@ -14,6 +22,10 @@ html {
     -ms-text-size-adjust: 100%;
     text-size-adjust: 100%;
     touch-action: manipulation;
+    /* Prevent horizontal overflow */
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
 }
 
 body {
@@ -26,6 +38,10 @@ body {
     -webkit-touch-callout: none;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    /* Strict width control */
+    width: 100%;
+    max-width: 100vw;
+    min-width: 0;
 }
 
 /* Typography */

@@ -193,9 +193,18 @@
         overflow: visible;
     }
     
+    .hero-demo {
+        max-width: calc(100vw - 3rem);
+        margin: 1.5rem 1.5rem 0;
+    }
+    
     .hero-demo pre {
         max-width: 100%;
         font-size: 0.8rem;
+        /* Ensure centering during animation on mobile */
+        margin-left: auto;
+        margin-right: auto;
+        transform-origin: center;
     }
 }
 
@@ -205,8 +214,17 @@
         padding-top: 5rem;
     }
     
+    .hero-demo {
+        max-width: calc(100vw - 2rem);
+        margin: 1.5rem 1rem 0;
+    }
+    
     .hero-demo pre {
         font-size: 0.75rem;
         padding: 0.8rem;
+        /* Maintain center expansion on small mobile */
+        margin-left: auto;
+        margin-right: auto;
+        transform-origin: center center;
     }
 }

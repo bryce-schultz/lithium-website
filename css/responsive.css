@@ -6,10 +6,18 @@
         -moz-text-size-adjust: 100%;
         -ms-text-size-adjust: 100%;
         text-size-adjust: 100%;
+        /* Strict mobile overflow control */
+        overflow-x: hidden !important;
+        width: 100vw;
+        max-width: 100vw;
     }
     
     * {
         touch-action: manipulation;
+        /* Prevent any element from causing horizontal overflow */
+        max-width: 100%;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
     
     input, textarea, select {
