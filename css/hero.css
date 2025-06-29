@@ -1,12 +1,13 @@
 /* Hero Section */
 .hero {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: flex-start;
     justify-content: center;
     text-align: center;
     padding: 1.5rem;
     padding-top: 8rem;
+    padding-bottom: 2rem;
     background: linear-gradient(135deg, #1e2a3a 0%, #2c3e50 50%, #34495e 100%);
     position: relative;
     overflow: hidden;
@@ -32,6 +33,7 @@
     height: 150%;
     background: radial-gradient(circle, rgba(52, 152, 219, 0.15) 0%, rgba(52, 152, 219, 0.05) 50%, transparent 70%);
     animation: floatSecondary 26s ease-in-out infinite reverse;
+    z-index: 0;
 }
 
 .hero-content {
@@ -39,17 +41,23 @@
     z-index: 1;
     max-width: 900px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
 }
 
 .hero-header {
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
+    flex-shrink: 0;
 }
 
 .hero-title {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 700;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
     background: linear-gradient(135deg, #87ceeb 0%, #add8e6 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -65,9 +73,9 @@
 }
 
 .hero-subtitle {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: #b8d4f0;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
     max-width: 650px;
     margin-left: auto;
     margin-right: auto;
@@ -78,11 +86,11 @@
 
 .hero-buttons {
     display: flex;
-    gap: 1.2rem;
+    gap: 1rem;
     justify-content: center;
     margin-bottom: 0;
     flex-wrap: wrap;
-    margin-top: 0.5rem;
+    margin-top: 0.3rem;
 }
 
 .hero-demo {
@@ -90,7 +98,8 @@
     width: 100%;
     margin: 1.5rem auto 0;
     text-align: left;
-    align-self: flex-start;
+    flex-grow: 0;
+    flex-shrink: 0;
 }
 
 .hero-demo pre {
@@ -102,17 +111,49 @@
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     position: relative;
     overflow-x: auto;
-    width: 100%;
+    width: 0;
     max-width: 700px;
     overflow-y: hidden;
     min-height: 2em;
+    margin: 0 auto;
+    transition: width 1.5s cubic-bezier(0.4, 0.0, 0.2, 1);
     /* Allow natural growth during animation */
+}
+
+.hero-demo pre::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 1rem;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.08) 0%, transparent 30%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.06) 0%, transparent 40%),
+        radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 35%),
+        radial-gradient(circle at 60% 70%, rgba(255, 255, 255, 0.04) 0%, transparent 25%),
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.03) 0%, transparent 30%),
+        radial-gradient(circle at 70% 50%, rgba(255, 255, 255, 0.04) 0%, transparent 35%);
+    opacity: 0.8;
+    mix-blend-mode: soft-light;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hero-demo pre code {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-demo pre.expanding {
+    width: 100%;
 }
 
 .hero-demo pre::before {
     content: "lithium";
     position: absolute;
-    top: 1rem;
+    top: 1.5rem;
     right: 1.5rem;
     background-color: #34495e;
     color: #87ceeb;
@@ -122,6 +163,12 @@
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.hero-demo pre.badge-visible::before {
+    opacity: 1;
 }
 
 /* Hero Animations */
@@ -136,4 +183,30 @@
     0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
     33% { transform: translate(-18px, 22px) rotate(120deg) scale(1.05); }
     66% { transform: translate(22px, -18px) rotate(240deg) scale(0.95); }
+}
+
+/* Responsive adjustments for hero animation */
+@media (max-width: 768px) {
+    .hero {
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
+    }
+    
+    .hero-demo pre {
+        max-width: 100%;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        min-height: 100vh;
+        padding-top: 5rem;
+    }
+    
+    .hero-demo pre {
+        font-size: 0.75rem;
+        padding: 0.8rem;
+    }
 }

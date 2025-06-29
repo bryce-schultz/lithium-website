@@ -18,32 +18,45 @@
     padding: 1rem 2rem;
     max-width: 1200px;
     margin: 0 auto;
+    min-height: 60px;
+    flex-wrap: nowrap;
+}
+
+.nav-brand {
+    flex-shrink: 0;
+    min-width: fit-content;
 }
 
 .nav-brand h1 {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     margin-bottom: 0;
     color: #87ceeb;
+    white-space: nowrap;
 }
 
 .nav-tagline {
     font-size: 0.8rem;
     color: #8a9ba8;
     font-weight: 300;
+    white-space: nowrap;
 }
 
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 2rem;
+    gap: 1.5rem;
     align-items: center;
+    flex-wrap: nowrap;
+    white-space: nowrap;
 }
 
 .nav-link {
     font-weight: 500;
+    font-size: 0.9rem;
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     transition: all 0.3s ease;
+    white-space: nowrap;
 }
 
 .nav-link:hover {
@@ -80,4 +93,43 @@
     background: #87ceeb;
     transition: all 0.3s ease;
     border-radius: 1px;
+}
+
+/* Medium screen adjustments */
+@media (max-width: 1024px) {
+    .nav {
+        padding: 1rem 1.5rem;
+    }
+    
+    .nav-menu {
+        gap: 1.2rem;
+    }
+    
+    .nav-link {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .nav {
+        padding: 1rem;
+    }
+    
+    .nav-brand h1 {
+        font-size: 1.6rem;
+    }
+    
+    .nav-tagline {
+        font-size: 0.75rem;
+    }
+    
+    .nav-menu {
+        gap: 1rem;
+    }
+    
+    .nav-link {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.6rem;
+    }
 }

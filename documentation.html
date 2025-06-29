@@ -83,6 +83,13 @@
             color: #add8e6;
         }
         
+        .doc-content hr {
+            border: none;
+            height: 1px;
+            background-color: #34495e;
+            margin: 2rem 0;
+        }
+        
         .doc-content table {
             width: 100%;
             border-collapse: collapse;
@@ -127,6 +134,16 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
         
+        .doc-content .warning ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0.5rem 0;
+        }
+        
+        .doc-content .warning li {
+            margin-bottom: 0.5rem;
+        }
+        
         .doc-content .info {
             background-color: #1e3a5f;
             border: 1px solid #3498db;
@@ -136,22 +153,33 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
         
+        .doc-content .info ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0.5rem 0;
+        }
+        
+        .doc-content .info li {
+            margin-bottom: 0.5rem;
+        }
+        
         .doc-content pre {
-            background: linear-gradient(135deg, #263847 0%, #2a3a4a 50%, #263847 100%);
-            border: 1px solid #34495e;
+            background: rgba(30, 42, 58, 0.8);
+            border: 1px solid #2c3e50;
             border-radius: 0.5rem;
             padding: 1.5rem;
-            overflow-x: auto;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3), 0 1px 3px rgba(86, 156, 214, 0.1);
-            position: relative;
             margin: 1rem 0;
+            overflow-x: auto;
+            position: relative;
+            word-wrap: break-word;
+            white-space: pre-wrap;
         }
         
         .doc-content pre::before {
             content: "lithium";
             position: absolute;
             top: 0.5rem;
-            right: 1rem;
+            right: 0.5rem;
             background-color: #34495e;
             color: #87ceeb;
             padding: 0.25rem 0.5rem;
@@ -181,6 +209,28 @@
                 0 0 12px rgba(206, 145, 120, 0.1),
                 0 0 6px rgba(106, 153, 85, 0.1);
             filter: contrast(1.05) brightness(1.02);
+        }
+        
+        /* Error message styling */
+        .error-message {
+            color: #ff6b6b !important;
+            font-weight: normal !important;
+        }
+        
+        .error-underline {
+            color: #ff6b6b !important;
+            font-weight: normal !important;
+        }
+        
+        /* Override syntax highlighting for error messages */
+        .doc-content pre code .error-message {
+            color: #ff6b6b !important;
+            background: none !important;
+        }
+        
+        .doc-content pre code .error-underline {
+            color: #ff6b6b !important;
+            background: none !important;
         }
         
         .toc {
@@ -285,7 +335,7 @@
                 <li><a href="#type-system">🎯 Type System Details</a></li>
                 <li><a href="#grammar">📝 Grammar Reference</a></li>
                 <li><a href="#error-handling">🚨 Error Handling</a></li>
-                <li><a href="#repl">🎮 Interactive REPL</a></li>
+                <li><a href="#repl">⌨️ Interactive REPL</a></li>
                 <li><a href="#best-practices">🔧 Best Practices</a></li>
             </ul>
         </div>
@@ -1357,7 +1407,7 @@ argList'       → , assign argList' | ε</code></pre>
 
             <hr>
 
-            <h2 id="repl">🎮 Interactive REPL</h2>
+            <h2 id="repl">⌨️ Interactive REPL</h2>
 
             <h3>Starting the REPL</h3>
 
@@ -1435,6 +1485,23 @@ fn getElement(array, index) {
     return array[index];
 }</code></pre>
 
+            <h3>Null Checking</h3>
+
+            <pre><code># ✅ Good: Use == operator for null checks
+if (x == null) {
+    println("x is null");
+}
+
+# ✅ Good: Checking for non-null values
+if (x != null) {
+    println("x has a value: " + x);
+}
+
+# ✅ Good: Safe object member access
+if (obj != null) {
+    obj.doSomething();
+}</code></pre>
+
             <h3>Class Design</h3>
 
             <pre><code># ✅ Good: Clear constructor parameters
@@ -1490,6 +1557,5 @@ class Rectangle {
     <!-- JavaScript modules -->
     <script src="js/navigation.js"></script>
     <script src="js/syntax-highlighting.js"></script>
-    <script src="js/copy-buttons.js"></script>
 </body>
 </html>

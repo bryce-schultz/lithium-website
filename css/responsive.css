@@ -1,5 +1,9 @@
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 800px) {
+    .nav {
+        padding: 1rem;
+    }
+
     .nav-menu {
         display: none;
         position: absolute;
@@ -10,6 +14,7 @@
         flex-direction: column;
         padding: 2rem;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        gap: 1rem;
     }
 
     .nav-menu.active {
@@ -33,8 +38,17 @@
         transform: rotate(-45deg) translate(3px, -3px);
     }
 
+    .hero {
+        height: auto;
+        min-height: 100vh;
+        padding: 1rem;
+        padding-top: 7rem;
+        padding-bottom: 3rem;
+        overflow: visible;
+    }
+
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
 
     .hero-emoji {
@@ -42,17 +56,29 @@
     }
 
     .hero-subtitle {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
 
     .hero-buttons {
         flex-direction: column;
         align-items: center;
+        gap: 0.8rem;
     }
-
     .btn {
         width: 200px;
         text-align: center;
+    }
+
+    .hero-demo {
+        margin: 1rem auto 0;
+        max-width: 100%;
+    }
+
+    .hero-demo pre {
+        padding: 1rem;
+        font-size: 0.8rem;
+        border-radius: 0.5rem;
+        margin: 0;
     }
 
     .overview-grid,
@@ -92,16 +118,37 @@
     .section {
         padding: 3rem 0;
     }
-
-    .hero-demo pre {
-        padding: 1rem;
-        font-size: 0.8rem;
-    }
 }
 
 @media (max-width: 480px) {
+    .hero {
+        padding: 0.5rem;
+        padding-top: 6rem;
+        padding-bottom: 2rem;
+        min-height: 100vh;
+    }
+
     .hero-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+
+    .hero-header {
+        margin-bottom: 1rem;
+    }
+
+    .hero-demo {
+        margin: 0.8rem auto 0;
+    }
+
+    .hero-demo pre {
+        padding: 0.8rem;
+        font-size: 0.75rem;
+        border-radius: 0.4rem;
     }
 
     .section-title {
@@ -131,5 +178,7 @@
         width: 100%;
         max-width: 280px;
         text-align: center;
+        font-size: 0.9rem;
+        padding: 0.7rem 1.5rem;
     }
 }
