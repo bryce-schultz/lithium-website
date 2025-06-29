@@ -32,6 +32,12 @@ function applySyntaxHighlighting(codeElement) {
         return createToken('number', match);
     });
     
+    // Class names (only when they appear after 'class' keyword) - BEFORE keywords
+    code = code.replace(/\bclass\s+([A-Za-z_][A-Za-z0-9_]*)/g, (match, className) => {
+        const classToken = createToken('class-name', className);
+        return match.replace(className, classToken);
+    });
+    
     // Keywords
     const keywords = [
         'fn', 'let', 'const', 'if', 'else', 'while', 'for', 'foreach',
@@ -46,21 +52,12 @@ function applySyntaxHighlighting(codeElement) {
         });
     });
     
-    // Class names (words that follow 'class' keyword or are called with ())
-    code = code.replace(/\bclass\s+([A-Za-z_][A-Za-z0-9_]*)/g, (match, className) => {
-        const classToken = createToken('class-name', className);
-        return match.replace(className, classToken);
-    });
-    
-    // Function calls and constructor calls (word followed by parentheses)
+    // Function calls (word followed by parentheses)
     code = code.replace(/\b([A-Za-z_][A-Za-z0-9_]*)\s*\(/g, (match, funcName) => {
-        // Skip if it's already a keyword token
+        // Skip if it's already a keyword token or class token
         if (match.includes('__TOKEN_')) return match;
         
-        // Check if this looks like a constructor call (starts with capital letter)
-        const isConstructor = /^[A-Z]/.test(funcName);
-        const className = isConstructor ? 'class-name' : 'function';
-        const funcToken = createToken(className, funcName);
+        const funcToken = createToken('function', funcName);
         return match.replace(funcName, funcToken);
     });
     
