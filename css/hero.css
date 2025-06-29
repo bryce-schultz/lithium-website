@@ -106,18 +106,34 @@
     background: rgba(38, 56, 71, 0.8);
     border: 1px solid #34495e;
     border-radius: 1rem;
-    padding: 1.5rem;
+    padding: 0;
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     position: relative;
-    overflow-x: auto;
+    overflow: hidden;
     width: 0;
     max-width: 700px;
-    overflow-y: hidden;
     min-height: 2em;
     margin: 0 auto;
-    transition: width 1.5s cubic-bezier(0.4, 0.0, 0.2, 1);
-    /* Allow natural growth during animation */
+    opacity: 0;
+    transition: opacity 0.3s ease, width 1.5s cubic-bezier(0.4, 0.0, 0.2, 1), padding 0.5s ease;
+    /* Start invisible, then appear as thin line, then expand */
+}
+
+.hero-demo pre.appearing {
+    opacity: 1;
+    width: 4px;
+    padding: 0;
+}
+
+.hero-demo pre.expanding {
+    width: 100%;
+    padding: 1.5rem;
+}
+
+.hero-demo pre.scrollable {
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .hero-demo pre::after {
@@ -144,10 +160,6 @@
 .hero-demo pre code {
     position: relative;
     z-index: 2;
-}
-
-.hero-demo pre.expanding {
-    width: 100%;
 }
 
 .hero-demo pre::before {
@@ -222,10 +234,13 @@
     
     .hero-demo pre {
         font-size: 0.75rem;
-        padding: 0.8rem;
         /* Maintain center expansion on small mobile */
         margin-left: auto;
         margin-right: auto;
         transform-origin: center center;
+    }
+    
+    .hero-demo pre.expanding {
+        padding: 0.8rem;
     }
 }

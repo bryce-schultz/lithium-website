@@ -141,12 +141,22 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // Start with width expansion animation
+        // Start with appearance animation (invisible to vertical line)
         setTimeout(() => {
-            preElement.classList.add('expanding');
-            
-            // Start typing animation after width expansion completes
-            setTimeout(typeCode, 1500); // Wait for width animation to finish
+            preElement.classList.add('appearing');
+
+            // Then start width expansion animation
+            setTimeout(() => {
+                preElement.classList.add('expanding');
+
+                // Start typing animation after width expansion completes
+                setTimeout(typeCode, 1500); // Wait for width animation to finish
+                
+                // Add scrollable class after expansion and typing are complete
+                setTimeout(() => {
+                    preElement.classList.add('scrollable');
+                }, 3500); // Wait for expansion + most of typing to complete
+            }, 500); // Wait for line appearance
         }, 1000);
     }
 });
