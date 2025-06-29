@@ -1,0 +1,112 @@
+/* Code Styling */
+code {
+    font-family: 'JetBrains Mono', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+pre code {
+    color: #d4d4d4;
+    font-size: 0.85rem;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    tab-size: 4;
+}
+
+/* Syntax Highlighting for Lithium */
+.keyword {
+    color: #c586c0;
+    font-weight: 600;
+}
+
+.string {
+    color: #98d982;
+}
+
+.number {
+    color: #b5cea8;
+}
+
+.comment {
+    color: #7c7c7c;
+    font-style: italic;
+}
+
+.function {
+    color: #4fc1ff;
+}
+
+.class-name {
+    color: #f7dc6f;
+    font-weight: 600;
+}
+
+/* Copy Button Styles */
+.copy-button {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: rgba(44, 62, 80, 0.9);
+    border: 1px solid #34495e;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 0;
+    color: transparent;
+    transition: all 0.3s ease;
+    z-index: 10;
+    opacity: 0;
+}
+
+.copy-button::after {
+    content: "📋";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.9rem;
+    color: initial;
+}
+
+.copy-button.success::after {
+    content: "✅";
+}
+
+.copy-button.error::after {
+    content: "❌";
+}
+
+pre:hover .copy-button {
+    opacity: 1;
+}
+
+/* Syntax highlighting enhancements */
+pre code {
+    text-shadow: 
+        0 0 8px rgba(86, 156, 214, 0.15),
+        0 0 12px rgba(206, 145, 120, 0.1),
+        0 0 6px rgba(106, 153, 85, 0.1);
+    filter: contrast(1.05) brightness(1.02);
+}
+
+/* Improved readability */
+.hero-demo pre code {
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    tab-size: 4;
+    font-feature-settings: "liga" 0;
+    text-rendering: optimizeLegibility;
+}
+
+.feature-item pre code,
+.example-card pre code {
+    white-space: pre-wrap;
+    word-spacing: normal;
+    word-break: break-word;
+    tab-size: 4;
+    font-feature-settings: "liga" 0;
+    text-rendering: optimizeLegibility;
+    overflow-wrap: break-word;
+}

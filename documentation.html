@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lithium Language Specification v1.1</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-new.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -33,6 +33,13 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+        }
+        
+        /* Ensure emojis in titles display in natural colors */
+        .doc-title::before {
+            content: "📋 ";
+            -webkit-text-fill-color: initial;
+            background: none;
         }
         
         .doc-subtitle {
@@ -256,7 +263,7 @@
         <a href="index.html" class="back-link">Back to Home</a>
         
         <div class="doc-header">
-            <h1 class="doc-title">📋 Lithium Language Specification</h1>
+            <h1 class="doc-title">Lithium Language Specification</h1>
             <p class="doc-subtitle">Version 1.1 - Complete Reference</p>
         </div>
 
@@ -1480,6 +1487,9 @@ class Rectangle {
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- JavaScript modules -->
+    <script src="js/navigation.js"></script>
+    <script src="js/syntax-highlighting.js"></script>
+    <script src="js/copy-buttons.js"></script>
 </body>
 </html>

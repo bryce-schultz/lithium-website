@@ -1,0 +1,139 @@
+/* Hero Section */
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: center;
+    padding: 1.5rem;
+    padding-top: 8rem;
+    background: linear-gradient(135deg, #1e2a3a 0%, #2c3e50 50%, #34495e 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(135, 206, 235, 0.25) 0%, rgba(135, 206, 235, 0.08) 40%, transparent 70%);
+    animation: float 22s ease-in-out infinite;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    top: -30%;
+    right: -30%;
+    width: 150%;
+    height: 150%;
+    background: radial-gradient(circle, rgba(52, 152, 219, 0.15) 0%, rgba(52, 152, 219, 0.05) 50%, transparent 70%);
+    animation: floatSecondary 26s ease-in-out infinite reverse;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    width: 100%;
+}
+
+.hero-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #87ceeb 0%, #add8e6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    line-height: 1.2;
+}
+
+.hero-emoji {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: #b8d4f0;
+    margin-bottom: 1.5rem;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+    font-weight: 400;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1.2rem;
+    justify-content: center;
+    margin-bottom: 0;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+}
+
+.hero-demo {
+    max-width: 700px;
+    width: 100%;
+    margin: 1.5rem auto 0;
+    text-align: left;
+    align-self: flex-start;
+}
+
+.hero-demo pre {
+    background: rgba(38, 56, 71, 0.8);
+    border: 1px solid #34495e;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow-x: auto;
+    width: 100%;
+    max-width: 700px;
+    overflow-y: hidden;
+    min-height: 2em;
+    /* Allow natural growth during animation */
+}
+
+.hero-demo pre::before {
+    content: "lithium";
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    background-color: #34495e;
+    color: #87ceeb;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Hero Animations */
+@keyframes float {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(25px, -25px) rotate(90deg); }
+    50% { transform: translate(-20px, -15px) rotate(180deg); }
+    75% { transform: translate(-25px, 25px) rotate(270deg); }
+}
+
+@keyframes floatSecondary {
+    0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+    33% { transform: translate(-18px, 22px) rotate(120deg) scale(1.05); }
+    66% { transform: translate(22px, -18px) rotate(240deg) scale(0.95); }
+}

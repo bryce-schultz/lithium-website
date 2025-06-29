@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lithium Programming Language</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-new.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -20,6 +20,7 @@
                 <li><a href="#overview" class="nav-link">Overview</a></li>
                 <li><a href="#features" class="nav-link">Features</a></li>
                 <li><a href="#examples" class="nav-link">Examples</a></li>
+                <li><a href="#extension" class="nav-link">VS Code Extension</a></li>
                 <li><a href="#documentation" class="nav-link">Documentation</a></li>
                 <li><a href="#download" class="nav-link">Download</a></li>
             </ul>
@@ -239,8 +240,86 @@ println("Average: " + (sum / len(numbers)));</code></pre>
             </div>
         </section>
 
+        <!-- VS Code Extension Section -->
+        <section id="extension" class="section section-alt">
+            <div class="container">
+                <h2 class="section-title">🔧 VS Code Extension</h2>
+                <div class="extension-content">
+                    <div class="extension-info">
+                        <h3>Enhanced Development Experience</h3>
+                        <p>Get the most out of Lithium with our official Visual Studio Code extension featuring syntax highlighting, IntelliSense, and more.</p>
+                        
+                        <div class="extension-features">
+                            <div class="feature-list">
+                                <div class="feature-item-inline">
+                                    <span class="feature-icon">🎨</span>
+                                    <span>Syntax Highlighting</span>
+                                </div>
+                                <div class="feature-item-inline">
+                                    <span class="feature-icon">💡</span>
+                                    <span>IntelliSense Support</span>
+                                </div>
+                                <div class="feature-item-inline">
+                                    <span class="feature-icon">🔍</span>
+                                    <span>Error Detection</span>
+                                </div>
+                                <div class="feature-item-inline">
+                                    <span class="feature-icon">📝</span>
+                                    <span>Code Snippets</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="extension-buttons">
+                            <a href="https://marketplace.visualstudio.com/items?itemName=bryce-schultz.lithium-language" class="btn btn-primary" target="_blank" rel="noopener">
+                                📦 Install from Marketplace
+                            </a>
+                            <a href="https://github.com/bryce-schultz/lithium-extension" class="btn btn-secondary" target="_blank" rel="noopener">
+                                📂 View Source Code
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="extension-demo">
+                        <div class="vscode-mockup">
+                            <div class="vscode-titlebar">
+                                <div class="vscode-buttons">
+                                    <span class="vscode-btn red"></span>
+                                    <span class="vscode-btn yellow"></span>
+                                    <span class="vscode-btn green"></span>
+                                </div>
+                                <div class="vscode-title">main.li - Visual Studio Code</div>
+                            </div>
+                            <div class="vscode-content">
+                                <pre><code class="language-lithium"># Fibonacci sequence in Lithium
+fn fibonacci(n) {
+    if (n <= 1) {
+        return n;
+    }
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+class MathUtils {
+    fn factorial(n) {
+        if (n <= 1) {
+            return 1;
+        }
+        return n * factorial(n - 1);
+    }
+}
+
+let utils = MathUtils();
+println("Fibonacci(10): " + fibonacci(10));
+println("Factorial(5): " + utils.factorial(5));</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Documentation Section -->
-        <section id="documentation" class="section section-alt">
+        <section id="documentation" class="section">
             <div class="container">
                 <h2 class="section-title">📖 Documentation</h2>
                 <div class="documentation-grid">
@@ -273,7 +352,7 @@ println("Average: " + (sum / len(numbers)));</code></pre>
         </section>
 
         <!-- Download Section -->
-        <section id="download" class="section">
+        <section id="download" class="section section-alt">
             <div class="container">
                 <h2 class="section-title">⬇️ Download Lithium</h2>
                 <div class="download-content">
@@ -351,6 +430,9 @@ println("Average: " + (sum / len(numbers)));</code></pre>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- JavaScript modules -->
+    <script src="js/navigation.js"></script>
+    <script src="js/syntax-highlighting.js"></script>
+    <script src="js/copy-buttons.js"></script>
 </body>
 </html>
