@@ -191,6 +191,7 @@
         height: auto;
         min-height: 100vh;
         overflow: visible;
+        padding-top: 6rem;
     }
     
     .hero-demo {
@@ -211,7 +212,7 @@
 @media (max-width: 480px) {
     .hero {
         min-height: 100vh;
-        padding-top: 5rem;
+        padding-top: 6.5rem;
     }
     
     .hero-demo {
