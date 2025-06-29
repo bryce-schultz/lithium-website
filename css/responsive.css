@@ -1,3 +1,24 @@
+/* Mobile Zoom Prevention */
+@media (max-width: 800px) {
+    html, body {
+        touch-action: manipulation;
+        -webkit-text-size-adjust: 100%;
+        -moz-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+    }
+    
+    * {
+        touch-action: manipulation;
+    }
+    
+    input, textarea, select {
+        touch-action: manipulation;
+        -webkit-user-select: text;
+        user-select: text;
+    }
+}
+
 /* Responsive Design */
 @media (max-width: 800px) {
     .nav {
